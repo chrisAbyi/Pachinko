@@ -21,7 +21,8 @@ public class GameLogic : MonoBehaviour {
     private AudioClip minigameMusic;
 
     //Animations
-    private Animation animAdditionalWells;
+    private Animator anim;
+    //private Animation animAdditionalWells;
 
     //UI
     public Text textBallsLeft;
@@ -33,6 +34,7 @@ public class GameLogic : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        anim = GameObject.FindGameObjectWithTag("PachinkoMachine").GetComponent<Animator>();
         screenWidth = Screen.width;
 
         textBallsLeft.text = ballsLeft.ToString("D8");
@@ -98,6 +100,7 @@ public class GameLogic : MonoBehaviour {
     public void StartMiniGame()
     {
         miniGame = true;
+        anim.SetBool("minigame_active", miniGame);
 
         audio.clip = minigameMusic;
         audio.Play();
