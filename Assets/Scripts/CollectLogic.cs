@@ -15,11 +15,11 @@ public class CollectLogic : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.name == "BallOutlet")
+        if (other.name == "well_outlet")
         {
             logic.BallLost();
         }
-        else if(other.name == "CentralWell")
+        else if(other.name == "well_central")
         {
             logic.CentralWell();
         }
@@ -28,6 +28,7 @@ public class CollectLogic : MonoBehaviour {
             Debug.Log(other.name);
         }
 
-        Destroy(this.gameObject);
+        Destroy(this.gameObject, 4.0f);
     }
+
 }

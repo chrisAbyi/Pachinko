@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GameLogic : MonoBehaviour {
 
-    private int ballsLeft = 10;
+    private int ballsLeft = 1000;
     private int ballsLost = 0;
     private int ballsWell1 = 0;
     private int ballsWell2 = 0;
@@ -26,6 +26,8 @@ public class GameLogic : MonoBehaviour {
     // Use this for initialization
     void Start () {
         screenWidth = Screen.width;
+        //controlWheel.transform.eulerAngles = new Vector3(0, 0, 0);
+
 
         backgroundMusic = Resources.Load<AudioClip>("Sounds/standardMode") as AudioClip;
         minigameMusic = Resources.Load<AudioClip>("Sounds/minigame") as AudioClip;
@@ -45,7 +47,8 @@ public class GameLogic : MonoBehaviour {
         //Angle between 0 and 270 degrees
         ballSpeed = Input.mousePosition.x / screenWidth;
         controlWheel.transform.eulerAngles = new Vector3(0, 0, -Mathf.Floor(270 * ballSpeed));
-        ballSpeed = 1000 + 1000 * ballSpeed;
+        Debug.Log(controlWheel.transform.eulerAngles);
+        ballSpeed = 280 + 80 * ballSpeed;
 
         if (ballsLeft <= 0)
         {
