@@ -48,7 +48,7 @@ public class GameLogic : MonoBehaviour {
         ballSpeed = Input.mousePosition.x / screenWidth;
         controlWheel.transform.eulerAngles = new Vector3(0, 0, -Mathf.Floor(270 * ballSpeed));
         Debug.Log(controlWheel.transform.eulerAngles);
-        ballSpeed = 280 + 80 * ballSpeed;
+        ballSpeed = 2200 + 800 * ballSpeed;
 
         if (ballsLeft <= 0)
         {
