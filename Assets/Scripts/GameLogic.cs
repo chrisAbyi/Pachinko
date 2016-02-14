@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GameLogic : MonoBehaviour {
@@ -19,6 +20,10 @@ public class GameLogic : MonoBehaviour {
     private AudioClip backgroundMusic;
     private AudioClip minigameMusic;
 
+    //UI
+    public Text textBallsLeft;
+    public Text textBallsGone;
+
     public GameObject controlWheel;
     public Transform ballLauncher;
     public Rigidbody ballPrefab;
@@ -26,8 +31,9 @@ public class GameLogic : MonoBehaviour {
     // Use this for initialization
     void Start () {
         screenWidth = Screen.width;
-        //controlWheel.transform.eulerAngles = new Vector3(0, 0, 0);
 
+        textBallsLeft.text = ballsLeft.ToString("D8");
+        textBallsGone.text = ballsLost.ToString("D8");
 
         backgroundMusic = Resources.Load<AudioClip>("Sounds/standardMode") as AudioClip;
         minigameMusic = Resources.Load<AudioClip>("Sounds/minigame") as AudioClip;
@@ -46,9 +52,9 @@ public class GameLogic : MonoBehaviour {
     {
         //Angle between 0 and 270 degrees
         ballSpeed = Input.mousePosition.x / screenWidth;
-        controlWheel.transform.eulerAngles = new Vector3(0, 0, -Mathf.Floor(270 * ballSpeed));
+        controlWheel.transform.eulerAngles = new Vector3(0, 0, -Mathf.Floor(90 * ballSpeed));
         Debug.Log(controlWheel.transform.eulerAngles);
-        ballSpeed = 2200 + 800 * ballSpeed;
+        ballSpeed = 2200 + 500 * ballSpeed;
 
         if (ballsLeft <= 0)
         {
@@ -64,11 +70,13 @@ public class GameLogic : MonoBehaviour {
         ballInstance.AddForce(ballLauncher.up * ballSpeed);
 
         ballsLeft--;
+        textBallsLeft.text = ballsLeft.ToString("D8");
     }
 
     public void BallLost()
     {
         ballsLost++;
+        textBallsGone.text = ballsLost.ToString("D8");
     }
 
     public void CentralWell()
