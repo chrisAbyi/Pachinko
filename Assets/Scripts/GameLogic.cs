@@ -20,6 +20,9 @@ public class GameLogic : MonoBehaviour {
     private AudioClip backgroundMusic;
     private AudioClip minigameMusic;
 
+    //Animations
+    private Animation animAdditionalWells;
+
     //UI
     public Text textBallsLeft;
     public Text textBallsGone;
@@ -37,6 +40,9 @@ public class GameLogic : MonoBehaviour {
 
         backgroundMusic = Resources.Load<AudioClip>("Sounds/standardMode") as AudioClip;
         minigameMusic = Resources.Load<AudioClip>("Sounds/minigame") as AudioClip;
+
+        //animAdditionalWells = Resources.Load<Animation>("Animation/animAdditionalWells") as Animation;
+        //animAdditionalWells.Play();
 
         audio = GetComponent<AudioSource>();
         audio.clip = backgroundMusic;
