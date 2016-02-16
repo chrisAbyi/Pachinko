@@ -25,10 +25,10 @@ public class CollectLogic : MonoBehaviour {
         }
         else
         {
-            Debug.Log(other.name);
+            logic.ExtraWell();
         }
 
-        Destroy(this.gameObject, 4.0f);
+        Destroy(this.gameObject, 3.0f);
     }
 
 }
