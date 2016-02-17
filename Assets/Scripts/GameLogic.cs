@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameLogic : MonoBehaviour {
 
     private int ballsLeft = 1000;
     private int screenWidth;
     private float ballSpeed;
+    //public int ballsInLeftWell=0;
+    //public int ballsInRightWell=0;
 
     //Mini game variables
     private bool miniGame = false;
@@ -99,6 +102,7 @@ public class GameLogic : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+
         //Open or close trays if mini game is triggered
         if(miniGame && !trayOpen)
             openTrays();
@@ -121,7 +125,10 @@ public class GameLogic : MonoBehaviour {
 
         //Update countdown
         int timeLeft = (int) (endTime - Time.time);
-        if (timeLeft < 0 && miniGame) Deescalate();
+        if (timeLeft < 0 && miniGame)
+        {
+            Deescalate();
+        }
 
         if (miniGame) { 
             if (showCountdown < 0) { 
@@ -163,57 +170,79 @@ public class GameLogic : MonoBehaviour {
         {
             StartMiniGame();
         }
-
     }
 
+    //Called when a ball hits an extra well
     public void ExtraWell()
     {
-        if (miniGame)
+        GameObject[] ballsInLeftWell = GameObject.FindGameObjectsWithTag("BallInLeftWell");
+        GameObject[] ballsInRightWell = GameObject.FindGameObjectsWithTag("BallInRightWell");
+        Debug.Log(ballsInLeftWell.Length + "," + ballsInRightWell.Length);
+        if (miniGame && (ballsInLeftWell.Length > 0 && ballsInRightWell.Length > 0))
         {
-            defcon--;
-            endTime = Time.time + timespan;
-            screen.GetComponent<Renderer>().material = mat[defcon];
-            audioSounds.PlayOneShot(soundYeah);
-            if (defcon == 0)
-            {
-                textBallsLeft.text = "+1000";
-                ballsLeft += 1000;
+            CollectLogic l;
+            //Destroy all balls in the extra wells for a fresh start
+            for (int i = 0; i < ballsInLeftWell.Length; i++) { 
+                l = ballsInLeftWell[i].GetComponent<CollectLogic>();
+                StartCoroutine(l.Destroy(0));
+            }
+            for (int i = 0; i < ballsInRightWell.Length; i++) { 
+                //Destroy(ballsInLeftWell[i].gameObject);
+                l = ballsInRightWell[i].GetComponent<CollectLogic>();
+                StartCoroutine(l.Destroy(0));
+            }
+            Escalate();
+        }        
+    }
 
-                miniGame = false;
-                audioSounds.PlayOneShot(soundBang);
-                StartCoroutine(Nuke());
-            }
-            else
-            {
-                info = string.Format("DEFCON {0}", defcon);
-                textBallsLeft.text = "+100";
-                ballsLeft += 100;
-            }
+    public void Escalate()
+    {
+        defcon--;
+        endTime = Time.time + timespan;
+        screen.GetComponent<Renderer>().material = mat[defcon];
+        audioSounds.PlayOneShot(soundYeah);
+        if (defcon == 0)
+        {
+            textBallsLeft.text = "+1000";
+            ballsLeft += 1000;
+
+            miniGame = false;
+            audioSounds.PlayOneShot(soundBang);
+            StartCoroutine(Nuke());
+        }
+        else
+        {
+            info = string.Format("DEFCON {0}", defcon);
+            textBallsLeft.text = "+100";
+            ballsLeft += 100;
         }
     }
 
+    //Switch one defcon level down, if available. Reset timer.
     public void Deescalate()
     {
         audioSounds.PlayOneShot(soundBetterLuck);
         defcon++;
         screen.GetComponent<Renderer>().material = mat[defcon];
-        if (defcon != 6) { 
+        if (defcon < 6) { 
             endTime = Time.time + timespan;
             info = string.Format("DEFCON {0}", defcon);
         }
         else
         {
+            miniGame = false;
             StopMiniGame();
         }
     }
 
+    //Show nuke screen, then reset to normal (non-minigame) mode
     public IEnumerator Nuke()
     {
         info = "YEAH";
         yield return new WaitForSeconds(3);
         StopMiniGame();
     }
-
+    
     //Start mini game: change background music and screen image
     public void StartMiniGame()
     {

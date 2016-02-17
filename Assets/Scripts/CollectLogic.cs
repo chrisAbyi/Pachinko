@@ -4,19 +4,20 @@ using System.Collections;
 public class CollectLogic : MonoBehaviour {
 
     private GameLogic logic;
-
     private AudioSource audioSounds;
-    private AudioClip soundExplosion;
     private AudioClip soundClick;
     private AudioClip soundBonus;
+    private AudioClip soundExplosion;
+
+    public GameObject explosion;
 
     // Use this for initialization
     void Start () {
         logic = GameObject.FindGameObjectWithTag("GameLogic").GetComponent<GameLogic>();
         audioSounds = GetComponent<AudioSource>();
         soundClick = Resources.Load<AudioClip>("Sounds/click") as AudioClip;
-        soundExplosion = Resources.Load<AudioClip>("Sounds/explosion") as AudioClip;
         soundBonus = Resources.Load<AudioClip>("Sounds/bonus") as AudioClip;
+        soundExplosion = Resources.Load<AudioClip>("Sounds/explosion") as AudioClip;
     }
 
     // Update is called once per frame
@@ -24,10 +25,8 @@ public class CollectLogic : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.name == "pin")
-        {
+         if (collision.collider.name == "pin")
             audioSounds.PlayOneShot(soundClick);
-        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -37,14 +36,27 @@ public class CollectLogic : MonoBehaviour {
             audioSounds.PlayOneShot(soundBonus);
             logic.CentralWell();
         }
-        else if (other.name == "well_left" || other.name == "well_right")
+        else if (other.name == "well_left")
         {
+            gameObject.tag = "BallInLeftWell";
             audioSounds.PlayOneShot(soundBonus);
             logic.ExtraWell();
         }
-
-        audioSounds.PlayOneShot(soundExplosion);
-        Destroy(this.gameObject, 10.0f);
+        else if (other.name == "well_right"){
+            gameObject.tag = "BallInRightWell";
+            audioSounds.PlayOneShot(soundBonus);
+            logic.ExtraWell();
+        }
+        StartCoroutine(Destroy(5));
+    }
+    
+    public IEnumerator Destroy(int sec)
+    {
+        yield return new WaitForSeconds(sec);
+        GameObject newexplosion = (GameObject)Instantiate(explosion, transform.position, transform.rotation);
+        Destroy(newexplosion.gameObject, 1);
+        //audioSounds.PlayOneShot(soundExplosion);
+        Destroy(this.gameObject);
     }
 
 }
