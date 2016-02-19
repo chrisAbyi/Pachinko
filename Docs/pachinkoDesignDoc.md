@@ -1,5 +1,7 @@
 # Pachinko Design Document
 
+[Video of game in action (YouTube)](https://youtu.be/bUsv32tCHO4)
+
 ## Introduction
 
 We decided to pursue a slightly different interpretation of the instructions for the assignment and look at Pachinko - a variety of Japanese game which fills many of the same cultural niches as slot machines do in the West.
@@ -36,40 +38,34 @@ Mini-games vary massively, incorporated different stages, payout schemes, risk-r
 
 _Theme_: War
 
+_Controls_: Move the mouse left/right to decrease/increase the force with which the balls are launched (this is indicated by the rotation of the handle in the bottom right).
+
 ### Game Rules:
 
 #### Standard Mode
 
-1. Player receives 1000 balls at the start. StandardMode music plays (standardMode.mp3).
+1. Player receives 1000 balls at the start. StandardMode music plays (standardMode.mp3). 
 2. Video Screen in the middle can be static (usually it would have animation - could be added later).
 1. Player uses right/left arrows to increase/decrease the clockwise-rotation of the ball-launcher handle. This is the only method of interaction for the player.
     2.  Turning the handle more to the right will increase the force with which the balls are launched.
     3.  Balls will be launched every 0.7 seconds.
 2. Balls launch up the left-hand side and then fall down, hitting pins as they go.
     3.  Must be possible to launch balls so that they go down either side of the board - the right side with more force (greater clockwise rotation of the handle) or the left-side with less force (lesser clockwise roation of the handle).
-4.  Balls will end up either collecting in the bottom of the machine and exiting, or falling into the central game well.
+4.  Balls will end up either collecting in the bottom of the machine and exiting (via an explosion), or falling into the central game well.
 5.  When a ball falls into the central game well, the mini-game begins.
-6.  Random particle effects can trigger around the board for absolutely no reason at all.
+6.  Random particle effects can trigger around the board for absolutely no reason at all - eye candy is good!
 
 #### Mini-Game
 
 1. When the mini-game is initiated,  two __bonus trays__ that will pop out and light-up to highlight their presence. There will also be new music that plays (minigame.mp3) to accompany the mini-game for its full duration until a return to Standard Mode. Lots of particle effects to signify this exciting development.
-2. The aim of the player is to get balls to fall into either these bonus trays and the central game well.
-3. The monitor in the middle of the board will show an image of a war room with a DEFCON status indicator at DEFCON 5. There will also be a timer displayed that starts to count down, starting at 60seconds.
-4. For each ball that falls into the two trays or the central well, the DEFCON level will rise. If it reaches DEFCON 1 within 60 seconds, the __one bonus tray__ will retract back into the machine and the mini-game will move to the next step of the mini-game. 
-    5.  If DEFCON 1 is not reached within 60 seconds, then the trays will retract and the player will return to Standard Mode.
-    6.  For every ball that is collected and contributes to the DEFCON level rising, trigger particle effects/lights etc. and play 'yeah.mp3'.
-6.  During the second stage of the mini-game, the monitor will show a nuclear missile being launched.
-    7. For every ball that is collected in the open bonus tray or central game well, play the __explosion.wav__ effect and add one warhead to a pictogram on the screen. (this will be a bonus payout later, for now represented as the power of the nuclear missle).
-    7. The missile will be shown travelling up for 25 seconds
-    8. The missile will then be shown travelling down for 25 seconds.
-    9. The monitor will then show 5 cities on the ground. One site shall be chosen at random, and the missile will travel there from the top middle of screen over a period of 10 seconds. At the beginning of this 10 seconds, play the __whoosh.wav__ sound effect. Upon impact, play the __bang.wav__ sound effect.
-        10. If there is a city there, then it will be blown up and the player will earn 250 balls plus an extra 20 for any balls that were collected in the bonus tray or the central game well during the 60 second animation for the flight of the missile. Play the __bonus.wav__ sound effect.
-        11. If there isn't a city there, there is no payout. Play the __betterLuck.mp3__ effect and return to standard mode.
-    12. The destroyed cities persist between mini-games for the duration of the game. If a city is destroyed and it's the last one standing, then the player gets a super payout of 2000 balls plus a bonus 50 balls for any ball that's collected from the bonus tray or central game well during the last missile run. (_To be honest, if they've played long enough for this to happen, they deserve it._) At this point, the game ends. Show victory image (victory.jpg) and congratulations. Firework particle effects. Game Over.
-13. Player returns to Standard Mode if they have not destroyed the last remaining city.
-
-![Outline](outline.png)
+2. The aim of the player is to get balls to fall into either these bonus trays. For any further balls that fall into the central game well, the player will received an extra 10 balls.
+3. The middle screen shows a series of 5 different images - each one corresponding to the 5 levels of Defense Condition (or DEFCON) that lead to war. In this case - nuclear armageddon.
+4. The mini-game starts at DEFCON 5.
+	1. The player needs to get at least one ball in both trays in order to progress to the next level of DEFCON (a decrease in number to level 1).
+	2. The player has 20 seconds to do so. A countdown can be seen in the bottom left. A sound will play when the player is successful in getting a ball into either bonus tray.
+		1. If the player succeeds in getting a ball in both trays within 20 seconds, they will go to the next level of DEFCON (5 -> 4 -> 3 -> 2 -> 1).
+		2. If the player fails to get a ball in both trays within 20 seconds, they will drop back to the last level fo DEFCON. If they player was at DEFCON 5, the mini-game will exit and the machine will go back to Standard Mode.
+		3. If a player reaches DEFCON 1 and manages to get balls into both bonus trays, 'nuclear armageddon' results and the player is rewarded with 1000 extra balls. The machine then returns back to standard mode.
 
 
 
@@ -89,11 +85,4 @@ _Theme_: War
 
 
 
----
 
-
-Ideas:
-
-* Have different types of balls - different physics (e.g. weight/bounciness)
-* [Yakuza mini-game sim:](https://www.youtube.com/watch?v=9-YscE3MmZU)
-* 
