@@ -12,3 +12,4 @@ Assignment for the 2015/16 course "Intro to Games Programming" at Goldsmiths, Un
 
 * Pachinko machine made for 'Slots Machine' assignment.
 * Design Doc and images in 'Docs' folder to keep Unity folder clean.
+* Video of gameplay: [YouTube](https://youtu.be/bUsv32tCHO4)
